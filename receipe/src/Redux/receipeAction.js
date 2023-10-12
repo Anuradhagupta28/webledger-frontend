@@ -69,7 +69,7 @@ export const getUser = (inputValues) => {
         });
         
       })
-      // .then((res)=> console.log(res))
+      
       .catch((err) => {
         dispatch({
           type: ADD_USER_DATA_LOGIN_FAIL,
