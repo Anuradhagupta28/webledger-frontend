@@ -1,86 +1,40 @@
+
+
 import "./Receipe.css";
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { detailsAction } from "../Redux/receipeAction";
+import { detailsFun ,favoriteAction } from "../Redux/receipeAction";
+
 
 function Receipe() {
-  const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]);
+//   const [products, setProducts] = useState([]);
+ 
+// const dataSave = UseSelector((state) => state.dataSave);
+const productData=useSelector((state)=>state.receipe)
+console.log("productData",productData)
 
-  useEffect(() => {
-    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
-    setCart(storedCart);
-  }, []);
-  useEffect(() => {
-    fetch('https://natural-beauty-json2.onrender.com/product')
-      .then((response) => response.json())
-      .then((data) => setProducts(data))
-      .catch((error) => console.error('Error fetching data:', error));
-     
-  }, []);
+const navigate = useNavigate();
+const dispatch=useDispatch()
 
-  // Function to add a product to the cart
-  const addToCart = (product) => {
-    const updatedCart = [...cart];
-    const existingProduct = updatedCart.find((item) => item.id === product.id);
+const handleClick=(id)=>{
+  console.log(id)
+dispatch(detailsFun(id))
+navigate("/recDetails")
+}
 
-    if (existingProduct) {
-      // If the product is already in the cart, increase its quantity
-      existingProduct.quantity += 1;
-    } else {
-      // If the product is not in the cart, add it with a quantity of 1
-      updatedCart.push({ ...product, quantity: 1 });
-    }
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
-    // Send a PATCH request to update the product quantity on the server
-    updateProductQuantity(product.id, existingProduct ? existingProduct.quantity : 1);
-// console.log("updatedCart",updatedCart)
-    setCart(updatedCart);
-  };
+const handlefavourite=(id)=>{
+  // console.log(id)
+dispatch(favoriteAction(id))
 
-  // Function to update the quantity of a product in the cart
-  const updateQuantity = (productId, newQuantity) => {
-    if (newQuantity >= 0) {
-      const updatedCart = cart.map((item) =>
-        item.id === productId ? { ...item, quantity: newQuantity } : item
-      );
-      if (newQuantity === 0) {
-        const productIndex = updatedCart.findIndex((item) => item.id === productId);
-        if (productIndex !== -1) {
-          updatedCart.splice(productIndex, 1);
-        }
-      }
-      // Send a PATCH request to update the product quantity on the server
-
-      localStorage.setItem('cart', JSON.stringify(updatedCart));
-      updateProductQuantity(productId, newQuantity);
-      console.log("updatedCart2",updatedCart)
-     
-      setCart(updatedCart);
-    }
-    
-  };
-
-  // Function to send a PATCH request to update the product quantity on the server
-  const updateProductQuantity = (productId, newQuantity) => {
-    fetch(`https://natural-beauty-json2.onrender.com/product/${productId}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ quantity: newQuantity }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        // Handle the successful response, if needed
-      })
-      .catch((error) => console.error('Error updating product quantity:', error));
-  };
+}
+ 
 
   return (
     <div className="product-page">
          <div >
-      {/* <h2>In the spotlight</h2> */}
+     
       <img
         id="imagefirst"
         src="https://www.linkpicture.com/q/chocolate_1.png"
@@ -89,40 +43,23 @@ function Receipe() {
     </div>
       <h2>Receipe & Foods</h2>
       <div className="product-list">
-        {products.map((product) => (
+
+        {productData.map((product) => (
           <div className="product-card" key={product.id}>
-            <img src={product.Image} alt={product.Name} />
-            <h2>{product.Name}</h2>
-            <p>Summary : {product.Weight}</p>
+            <img src={product.image} alt={product.title} />
+            <h2>{product.title}</h2>
+            
+
+            <div className="buttonDiv">
+            <button className="button" onClick={() => handleClick(product.id)} >Get Description</button>
+            <button onClick={() => handlefavourite(product.id)}>
+  <svg class="empty" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32"><path fill="none" d="M0 0H24V24H0z"></path><path d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9.36 3 11 4 12 5c1-1 2.64-2 4.5-2zm-3.566 15.604c.881-.556 1.676-1.109 2.42-1.701C18.335 14.533 20 11.943 20 9c0-2.36-1.537-4-3.5-4-1.076 0-2.24.57-3.086 1.414L12 7.828l-1.414-1.414C9.74 5.57 8.576 5 7.5 5 5.56 5 4 6.656 4 9c0 2.944 1.666 5.533 4.645 7.903.745.592 1.54 1.145 2.421 1.7.299.189.595.37.934.572.339-.202.635-.383.934-.571z"></path></svg>
+  <svg class="filled" height="32" width="32" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0H24V24H0z" fill="none"></path><path d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9.36 3 11 4 12 5c1-1 2.64-2 4.5-2z"></path></svg>
+</button>
+            </div>
            
-            {cart.some((item) => item.id === product.id) ? (
-              <div className="cart-controls">
-                <button
-                  onClick={() =>
-                    updateQuantity(
-                      product.id,
-                      cart.find((item) => item.id === product.id).quantity - 1
-                    )
-                  }
-                >
-                  -
-                </button>
-                <span>{cart.find((item) => item.id === product.id).quantity}</span>
-                <button
-                  onClick={() =>
-                    updateQuantity(
-                      product.id,
-                      cart.find((item) => item.id === product.id).quantity + 1
-                    )
-                  }
-                >
-                  +
-                </button>
-              </div>
-            ) : (
-              <button className="buttonadd"onClick={() => addToCart(product) }>Add to cart</button>
-            )}
-          </div>
+
+           </div>
         ))}
       </div>
     </div>

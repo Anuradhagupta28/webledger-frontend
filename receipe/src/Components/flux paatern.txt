@@ -1,0 +1,2 @@
+componentA -> action->reducer->store->compentB
+->dispatch

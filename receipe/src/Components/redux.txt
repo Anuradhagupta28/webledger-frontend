@@ -1,0 +1,1 @@
+componentA->action->dispatch->reducer->store->componentB
