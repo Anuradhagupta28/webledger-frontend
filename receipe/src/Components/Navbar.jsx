@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 // import { StateContext } from '../Contex/stateContex';
 import { useDispatch } from "react-redux";
-import { setDataSave } from "../Redux/receipeAction";
+import { setDataSave } from "../Redux/Action";
 
 const Navbar = () => {
   // const {isLoggedIn,login,logout}=useContext(AuthContext);
@@ -16,7 +16,7 @@ const Navbar = () => {
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
-      fetch(`http://localhost:8080/api/search/recipes?query=${inputValue}`)
+      fetch(`https://webledger-backend-155x.onrender.com/api/search/recipes?query=${inputValue}`)
         .then((response) => response.json())
         .then((data) => {
           // Dispatch the setDataSave action to update Redux state
@@ -68,7 +68,7 @@ const Navbar = () => {
               <Link to="/login">Login</Link>
             </li>
           </ul>
-          <button data-quantity="0" class="btn-cart" onClick={handleFav}>
+          <button  class="btn-cart" onClick={handleFav}>
             <svg
               class="icon-cart"
               viewBox="0 0 24.38 30.52"

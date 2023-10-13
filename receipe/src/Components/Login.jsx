@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "../Redux/receipeAction";
+import { getUser } from "../Redux/Action";
 
 function Login() {
   const { login } = useSelector((state) => state);

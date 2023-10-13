@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./Signup.css";
 import { useDispatch, useSelector } from "react-redux";
-import { addUser } from "../Redux/receipeAction";
+import { addUser } from "../Redux/Action";
 import { useNavigate } from "react-router-dom";
 
 function Signup() {
