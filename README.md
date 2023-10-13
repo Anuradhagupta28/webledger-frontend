@@ -1,7 +1,7 @@
 # webledger-frontend
 # Recipe Search and User Preferences Application
 
-This project is a web application that combines backend and frontend development to provide users with a platform for searching recipes and saving their favorite ones. It features a Node.js server using Adonis.js for the backend and Vue.js for the frontend. The backend integrates with the Spoonacular API for recipe data and implements user registration and authentication. User preferences, including saved recipes, are stored in a database (e.g., MySQL or Postgres).
+This project is a web application that combines backend and frontend development to provide users with a platform for searching recipes and saving their favorite ones. It features a Node.js server using Express.js for the backend and React.js for the frontend. The backend integrates with the Spoonacular API for recipe data and implements user registration and authentication. User preferences, including saved recipes, are stored in a database (MOngodb).
 
 #Backend Repo Link:
 https://github.com/Anuradhagupta28/webledger_backend
