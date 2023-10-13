@@ -1,5 +1,5 @@
 // reducers/dataSaveReducer.js
-import { SET_DATA_SAVE, DETA,ADD_USER_DATA_LOGIN ,FAV ,ADD_USER_DATA_LOGIN_FAIL,SIGN,SIGNFAIL} from "./receipeAction";
+import { SET_DATA_SAVE, DETA,ADD_USER_DATA_LOGIN ,FAV ,ADD_USER_DATA_LOGIN_FAIL,SIGN,SIGNFAIL} from "./Action";
 
 
 const initialState ={

@@ -13,22 +13,18 @@ function Login() {
   const handlePage = () => {
     navigate("/");
   };
-  const token=localStorage.getItem("token")
+  const token = localStorage.getItem("token");
 
-  const handleSubmit =()=>{
-  
-  if(login.error== 'Invalid credentials'){
-    alert("Invalid credentials")
-  }
-  if(     login.message=="Login successful" ){
-    alert("Login successful")
-    navigate("/receipe")
-  }
-  console.log("login",login);
-  }
-
-  
- 
+  const handleSubmit = () => {
+    if (login.error == "Invalid credentials") {
+      alert("Invalid credentials");
+    }
+    if (login.message == "Login successful") {
+      alert("Login successful");
+      navigate("/receipe");
+    }
+    console.log("login", login);
+  };
 
   const [inputValues, setInputValues] = useState({
     email: "",
@@ -39,7 +35,6 @@ function Login() {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     dispatch(getUser(inputValues));
-  
   };
 
   const handleInputChange = (e) => {

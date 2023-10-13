@@ -5,44 +5,39 @@ import { addUser } from "../Redux/receipeAction";
 import { useNavigate } from "react-router-dom";
 
 function Signup() {
+  const [inputValues, setInputValues] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
+  const signData = useSelector((state) => state.sign);
+  // console.log("sig",signData);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    dispatch(addUser(inputValues));
+  };
 
-    const [inputValues, setInputValues] = useState({
-        name: "",
-        email: "",
-        password: "",
-      });
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setInputValues({
+      ...inputValues,
+      [name]: value,
+    });
+  };
 
-      const signData= useSelector((state) => state.sign);
-      // console.log("sig",signData);
-      const navigate=useNavigate();
-    const dispatch = useDispatch();
-    const handleFormSubmit = (e) => {
-      e.preventDefault();
-      dispatch(addUser(inputValues));
-    
-    };
-
- 
-
-    const handleInputChange = (e) => {
-      const { name, value } = e.target;
-      setInputValues({
-        ...inputValues,
-        [name]: value,
-      });
-    };
-
-    const handleSubmit=()=>{
-        if( signData.message=='Registration successful'){
-            alert("Registration successful")
-            navigate("/login")
-        }
-        if( signData.message=="User already exists"){
-            alert("User already exists")
-        }
-        console.log("signup",signData);
+  const handleSubmit = () => {
+    if (signData.message == "Registration successful") {
+      alert("Registration successful");
+      navigate("/login");
     }
+    if (signData.message == "User already exists") {
+      alert("User already exists");
+    }
+    console.log("signup", signData);
+  };
   return (
     <div class="maindiv">
       <form action="" class="form_main" onSubmit={handleFormSubmit}>
@@ -82,7 +77,6 @@ function Signup() {
             name="name"
             required
             onChange={handleInputChange}
-          
           />
         </div>
         <div class="inputContainer">
@@ -105,7 +99,6 @@ function Signup() {
             name="email"
             required
             onChange={handleInputChange}
-           
           />
         </div>
 
@@ -129,11 +122,12 @@ function Signup() {
             name="password"
             required
             onChange={handleInputChange}
-           
           />
         </div>
 
-        <button id="button" onClick={handleSubmit}>Submit</button>
+        <button id="button" onClick={handleSubmit}>
+          Submit
+        </button>
         <a class="forgotLink" href="/login">
           Already have an account?
         </a>
