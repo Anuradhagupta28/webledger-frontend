@@ -2,7 +2,6 @@ import "./Receipe.css";
 import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { detailsAction } from "../Redux/Action";
 import { detailsFun, favoriteAction } from "../Redux/Action";
 
 function Receipe() {
@@ -15,10 +14,25 @@ function Receipe() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const isLogin = localStorage.getItem("token");
+ 
+
   const handleClick = (id) => {
     console.log(id);
     dispatch(detailsFun(id));
-    navigate("/recDetails");
+    if(isLogin=="undefined"){
+      alert("Please login first!")
+      navigate("/login")
+    }
+    else if(isLogin){
+      navigate("/recDetails");
+    }
+   
+    else{
+      alert("Please login first!")
+      navigate("/login")
+    }
+   
   };
 
   const handlefavourite = (id) => {

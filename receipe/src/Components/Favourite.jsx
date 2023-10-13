@@ -11,13 +11,23 @@ function Favourite() {
 
   return (
     <div className="product-list">
-      <div className="product-card" key={detailsdata.id}>
-        <img src={detailsdata.image} alt={detailsdata.title} />
-        <h2>{detailsdata.title}</h2>
+      {detailsdata==[] ? (
+        <p>There is no receipe in favourites</p>
+      ) : (
+        detailsdata.map((el)=>{
+          return(
+        <div className="product-card" key={el.id}>
+        <img src={el.image} alt={el.title} />
+        <h2>{el.title}</h2>
 
         <h1>Ingrediant</h1>
-        <p>{detailsdata.dishTypes} </p>
+        <p>{el.dishTypes} </p>
       </div>
+          )
+        })
+      )}
+
+      
     </div>
   );
 }
